@@ -30,7 +30,11 @@ def index_view():
     # и взять первую запись из получившегося набора.
     opinion = Opinion.query.offset(offset_value).first()
     # Передать в шаблон весь объект opinion.
-    return render_template('index.html', opinion=opinion)
+    return render_template('opinion.html', opinion=opinion)
+
+@app.route('/add')
+def add_opinion_view():
+    return render_template('add_opinion.html')
 
 
 if __name__ == '__main__':
