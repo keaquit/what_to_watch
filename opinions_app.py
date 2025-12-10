@@ -1,8 +1,7 @@
 from datetime import datetime
-
 from random import randrange
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -27,9 +26,11 @@ def index_view():
         return 'В базе данных мнений о фильмах нет.'
     # Иначе выбрать случайное число в диапазоне от 0 до quantity...
     offset_value = randrange(quantity)
-    # ...и определить случайный объект.
+    # Извлечь все записи, пропуская первые offset_value записей
+    # и взять первую запись из получившегося набора.
     opinion = Opinion.query.offset(offset_value).first()
-    return opinion.text
+    # Передать в шаблон весь объект opinion.
+    return render_template('index.html', opinion=opinion)
 
 
 if __name__ == '__main__':
